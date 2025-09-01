@@ -32,9 +32,9 @@ const LoginForm: React.FC = () => {
   }
 
   return (
-    <div className="w-full max-w-md p-8 space-y-6 bg-white rounded-xl shadow-lg">
-      <h2 className="text-2xl font-bold text-center text-gray-800">
-        {isSignUp ? 'アカウント登録' : 'ログイン'}
+    <div className="bg-gray-800 p-8 rounded-lg shadow-md w-full max-w-md">
+      <h2 className="text-2xl font-bold text-white mb-6 text-center">
+        {isSignUp ? 'アカウント登録' : 'ログイン（オプション）'}
       </h2>
       
       <form onSubmit={handleEmailAuth} className="space-y-6">
@@ -44,7 +44,7 @@ const LoginForm: React.FC = () => {
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             placeholder="メールアドレス"
-            className="w-full px-4 py-3 text-gray-700 bg-gray-100 border-transparent rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:bg-white"
+            className="w-full px-4 py-2 bg-gray-700 border border-gray-600 rounded-md text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500"
             required
           />
         </div>
@@ -55,36 +55,33 @@ const LoginForm: React.FC = () => {
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             placeholder="パスワード"
-            className="w-full px-4 py-3 text-gray-700 bg-gray-100 border-transparent rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:bg-white"
+            className="w-full px-4 py-2 bg-gray-700 border border-gray-600 rounded-md text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500"
             required
           />
         </div>
         
-        {error && <p className="text-sm text-red-600 text-center">{error}</p>}
+        {error && <p className="text-red-500 text-sm">{error}</p>}
         
-        <button type="submit" className="w-full py-3 font-semibold text-white bg-blue-600 rounded-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-colors duration-300">
-          {isSignUp ? '登録する' : 'ログイン'}
+        <button type="submit" className="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-md transition duration-300">
+          {isSignUp ? '新規登録' : 'ログイン'}
         </button>
         
         <button 
           type="button"
           onClick={() => setIsSignUp(!isSignUp)}
-          className="w-full text-sm text-center text-blue-600 hover:underline"
+          className="w-full text-gray-400 hover:text-white text-sm"
         >
           {isSignUp ? 'ログインに切り替え' : '新規登録に切り替え'}
         </button>
       </form>
       
-      <div className="relative flex items-center justify-center">
-        <div className="absolute inset-0 flex items-center">
-          <div className="w-full border-t border-gray-300"></div>
-        </div>
-        <div className="relative px-2 text-sm text-gray-500 bg-white">
-          または
-        </div>
+      <div className="relative flex py-5 items-center">
+        <div className="flex-grow border-t border-gray-600"></div>
+        <span className="flex-shrink mx-4 text-gray-400">または</span>
+        <div className="flex-grow border-t border-gray-600"></div>
       </div>
       
-      <button onClick={handleGoogleLogin} className="w-full flex items-center justify-center py-3 font-semibold text-gray-700 bg-white border border-gray-300 rounded-lg hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-colors duration-300">
+      <button onClick={handleGoogleLogin} className="w-full flex items-center justify-center bg-white text-gray-800 font-bold py-2 px-4 rounded-md hover:bg-gray-200 transition duration-300">
         <svg className="w-5 h-5 mr-2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48">
           <path fill="#FFC107" d="M43.611 20.083H42V20H24v8h11.303c-1.649 4.657-6.08 8-11.303 8c-6.627 0-12-5.373-12-12s5.373-12 12-12c3.059 0 5.842 1.154 7.961 3.039l5.657-5.657C34.046 6.053 29.268 4 24 4C12.955 4 4 12.955 4 24s8.955 20 20 20s20-8.955 20-20c0-1.341-.138-2.65-.389-3.917z"/>
           <path fill="#FF3D00" d="M6.306 14.691l6.571 4.819C14.655 15.108 18.961 12 24 12c3.059 0 5.842 1.154 7.961 3.039l5.657-5.657C34.046 6.053 29.268 4 24 4C16.318 4 9.656 8.337 6.306 14.691z"/>
