@@ -1,3 +1,4 @@
+// Custom hook for handling authentication with Google and Twitter
 import { useEffect } from 'react'
 import { onAuthStateChanged, signInWithPopup, signInWithRedirect, getRedirectResult, signOut as firebaseSignOut } from 'firebase/auth'
 import { doc, setDoc, getDoc } from 'firebase/firestore'
@@ -8,6 +9,7 @@ export const useAuth = () => {
   const { user, setUser, loadUserProfile } = useAuthStore()
 
   useEffect(() => {
+    // Handle redirect result from Google sign-in
     const handleRedirectResult = async () => {
       try {
         const result = await getRedirectResult(auth)
@@ -21,6 +23,7 @@ export const useAuth = () => {
 
     handleRedirectResult()
 
+    // Listen for authentication state changes
     const unsubscribe = onAuthStateChanged(auth, async (user) => {
       setUser(user)
       if (user) {
@@ -31,6 +34,7 @@ export const useAuth = () => {
     return () => unsubscribe()
   }, [setUser, loadUserProfile])
 
+  // Sign in with Google using redirect flow
   const signInWithGoogle = async () => {
     try {
       await signInWithRedirect(auth, googleProvider)
@@ -40,6 +44,7 @@ export const useAuth = () => {
     }
   }
 
+  // Sign in with Twitter using popup flow
   const signInWithTwitter = async () => {
     try {
       const result = await signInWithPopup(auth, twitterProvider)
@@ -51,11 +56,13 @@ export const useAuth = () => {
     }
   }
 
+  // Create user profile in Firestore if it doesn't exist
   const createUserProfile = async (user: any) => {
     const userRef = doc(db, 'users', user.uid)
     const userSnap = await getDoc(userRef)
 
     if (!userSnap.exists()) {
+      // Track installation source from URL parameters
       const urlParams = new URLSearchParams(window.location.search)
       const installLink = urlParams.get('ref') || 'direct'
 
@@ -70,6 +77,7 @@ export const useAuth = () => {
     }
   }
 
+  // Sign out the current user
   const signOut = async () => {
     try {
       await firebaseSignOut(auth)

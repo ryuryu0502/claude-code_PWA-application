@@ -1,8 +1,10 @@
+// Firebase configuration and service initialization
 import { initializeApp } from 'firebase/app'
 import { getAuth, GoogleAuthProvider, TwitterAuthProvider } from 'firebase/auth'
 import { getFirestore } from 'firebase/firestore'
 import { getMessaging } from 'firebase/messaging'
 
+// Firebase project configuration from environment variables
 const firebaseConfig = {
   apiKey: import.meta.env.VITE_FIREBASE_API_KEY,
   authDomain: import.meta.env.VITE_FIREBASE_AUTH_DOMAIN,
@@ -13,8 +15,10 @@ const firebaseConfig = {
   measurementId: "G-ZNETML2MEJ"
 }
 
+// Initialize Firebase app
 const app = initializeApp(firebaseConfig)
 
+// Export Firebase services for use throughout the application
 export const auth = getAuth(app)
 export const db = getFirestore(app)
 export const messaging = getMessaging(app)

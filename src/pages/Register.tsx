@@ -1,4 +1,5 @@
 import React from 'react'
+import { useNavigate } from 'react-router-dom'
 import { useAuth } from '../hooks/useAuth'
 import LoginForm from '../components/Auth/LoginForm'
 import InstallInstructions from '../components/Auth/InstallInstructions'
@@ -6,6 +7,11 @@ import NotificationBanner from '../components/Common/NotificationBanner'
 
 const Register: React.FC = () => {
   const { user } = useAuth()
+  const navigate = useNavigate()
+
+  const handleGuestContinue = () => {
+    navigate('/home')
+  }
 
   if (user) {
     return (
@@ -25,7 +31,10 @@ const Register: React.FC = () => {
       
       <div className="auth-options">
         <div className="guest-access">
-          <button className="btn btn-primary guest-button">
+          <button 
+            onClick={handleGuestContinue}
+            className="btn btn-primary guest-button"
+          >
             <span>🎁</span>
             ゲストとして続行
           </button>

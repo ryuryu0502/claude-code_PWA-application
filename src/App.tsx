@@ -1,3 +1,4 @@
+// Main application component for PWA Twitter present campaign app
 import React, { useEffect } from 'react'
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom'
 import { useAuth } from './hooks/useAuth'
@@ -14,6 +15,7 @@ const App: React.FC = () => {
   const { isOnline } = useOffline()
   const { processPendingActions } = useOfflineSync()
 
+  // Process any pending offline actions when coming back online
   useEffect(() => {
     if (isOnline) {
       processPendingActions()
@@ -23,26 +25,19 @@ const App: React.FC = () => {
   return (
     <Router>
       <div className="app">
+        {/* Main content area for page components */}
         <main className="main-content">
           <Routes>
             <Route path="/register" element={<Register />} />
-            <Route 
-              path="/home" 
-              element={isAuthenticated ? <Home /> : <Navigate to="/register" />} 
-            />
-            <Route 
-              path="/talk" 
-              element={isAuthenticated ? <Talk /> : <Navigate to="/register" />} 
-            />
-            <Route 
-              path="/settings" 
-              element={isAuthenticated ? <Settings /> : <Navigate to="/register" />} 
-            />
+            <Route path="/home" element={<Home />} />
+            <Route path="/talk" element={<Talk />} />
+            <Route path="/settings" element={<Settings />} />
             <Route path="/" element={<Navigate to="/register" />} />
           </Routes>
         </main>
         
-        {isAuthenticated && <TabNavigation />}
+        {/* Bottom tab navigation */}
+        <TabNavigation />
       </div>
     </Router>
   )

@@ -1,0 +1,30 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // Users can read and write their own data
+    match /users/{userId} {
+      allow read, write: if request.auth != null && request.auth.uid == userId;
+      allow read: if true; // Allow reading user profiles for public display
+    }
+    
+    // Messages can be read by recipients
+    match /messages/{messageId} {
+      allow read: if request.auth != null && 
+        (request.auth.uid == resource.data.recipientId || 
+         request.auth.uid == resource.data.hostId);
+      allow write: if request.auth != null && request.auth.uid == resource.data.hostId;
+    }
+    
+    // Campaigns can be read by all users
+    match /campaigns/{campaignId} {
+      allow read: if true;
+      allow write: if request.auth != null; // Only authenticated users can create campaigns
+    }
+    
+    // Allow public read access for announcements
+    match /announcements/{announcementId} {
+      allow read: if true;
+      allow write: if request.auth != null; // Only authenticated users can create announcements
+    }
+  }
+}

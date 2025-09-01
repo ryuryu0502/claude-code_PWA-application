@@ -1,8 +1,10 @@
+// Entry point for the PWA application
 import React from 'react'
 import ReactDOM from 'react-dom/client'
 import App from './App.tsx'
 import './index.css'
 
+// Register service worker for PWA functionality
 if ('serviceWorker' in navigator) {
   window.addEventListener('load', () => {
     navigator.serviceWorker.register('/sw.js')
@@ -15,6 +17,7 @@ if ('serviceWorker' in navigator) {
   })
 }
 
+// Mount React application to DOM
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
     <App />
