@@ -64,3 +64,9 @@ firestore-debug.log
 # PWA
 sw.js.map
 workbox-*.js.map
+
+# Claude Code
+.claude/settings.local.json
+
+# MCP Configuration (contains sensitive tokens)
+.mcp.json
