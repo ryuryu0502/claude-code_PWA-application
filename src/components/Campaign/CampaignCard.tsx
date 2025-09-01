@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import { Campaign } from '../../services/campaignService';
 
 interface CampaignCardProps {
@@ -22,7 +23,7 @@ const CampaignCard: React.FC<CampaignCardProps> = ({ campaign, onJoin }) => {
         <button className="btn btn-primary" onClick={() => onJoin(campaign.id)}>
           参加する
         </button>
-        <button className="btn btn-ghost">詳細</button>
+        <Link to={`/campaign/${campaign.id}`} className="btn btn-ghost">詳細</Link>
       </div>
     </div>
   );
