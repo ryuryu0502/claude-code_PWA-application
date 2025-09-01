@@ -1,9 +1,10 @@
 importScripts('https://www.gstatic.com/firebasejs/10.3.1/firebase-app-compat.js')
 importScripts('https://www.gstatic.com/firebasejs/10.3.1/firebase-messaging-compat.js')
 
+// Firebase config will be injected during build
 const firebaseConfig = {
-  apiKey: "AIzaSyDc9vbmzIqFAdYNkgDQFAKXibGBX3hqKS0",
-  authDomain: "push-manager-2acdb.firebaseapp.com",
+  apiKey: "VITE_FIREBASE_API_KEY",
+  authDomain: "push-manager-2acdb.firebaseapp.com", 
   projectId: "push-manager-2acdb",
   storageBucket: "push-manager-2acdb.firebasestorage.app",
   messagingSenderId: "236273826467",
