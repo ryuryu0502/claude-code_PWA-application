@@ -1,8 +1,12 @@
-# PWA Present Campaign App
+# 🎁 プレゼント企画PWAアプリ
 
 [![Built with Claude Code](https://img.shields.io/badge/Built%20with-Claude%20Code-blue)](https://claude.ai)
 
-X(Twitter)用プレゼント企画PWAアプリケーション - Claude Codeとのライブコーディングで作成
+X(Twitter)でのプレゼント企画に参加できるPWA（Progressive Web App）です。
+
+## 🚀 プレビューリンク
+
+**ライブデモ**: https://push-manager-2acdb.web.app
 
 ## 概要
 

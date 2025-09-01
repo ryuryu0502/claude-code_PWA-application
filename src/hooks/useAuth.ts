@@ -37,7 +37,9 @@ export const useAuth = () => {
   // Sign in with Google using redirect flow
   const signInWithGoogle = async () => {
     try {
-      await signInWithRedirect(auth, googleProvider)
+      const result = await signInWithPopup(auth, googleProvider)
+      await createUserProfile(result.user)
+      return result.user
     } catch (error) {
       console.error('Googleログインエラー:', error)
       throw error

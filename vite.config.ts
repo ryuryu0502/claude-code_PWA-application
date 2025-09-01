@@ -8,7 +8,18 @@ export default defineConfig({
     VitePWA({
       registerType: 'autoUpdate',
       workbox: {
-        globPatterns: ['**/*.{js,css,html,ico,png,svg}']
+        globPatterns: ['**/*.{js,css,html,ico,png,svg}'],
+        navigateFallbackDenylist: [/^\/__\/auth\//, /^\/__\/firebase\//],
+        runtimeCaching: [
+          {
+            urlPattern: /^https:\/\/accounts\.google\.com\//,
+            handler: 'NetworkOnly',
+          },
+          {
+            urlPattern: /^https:\/\/.*\.firebaseapp\.com\//,
+            handler: 'NetworkOnly',
+          }
+        ]
       },
       includeAssets: ['favicon.ico', 'apple-touch-icon.png'],
       manifest: {

@@ -1,6 +1,7 @@
 {
   "hosting": {
     "public": "dist",
+    "site": "push-manager-2acdb",
     "ignore": [
       "firebase.json",
       "**/.*",
