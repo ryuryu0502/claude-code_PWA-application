@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import { campaignService, Campaign } from '../../services/campaignService';
-import { useAuthStore } from '../../stores/authStore';
+import { campaignService, Campaign } from '../services/campaignService';
+import { useAuthStore } from '../stores/authStore';
 
 const CampaignDetail: React.FC = () => {
   const { id } = useParams<{ id: string }>();
