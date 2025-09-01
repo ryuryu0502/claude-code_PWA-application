@@ -1,0 +1,213 @@
+/* Install Prompt Styles */
+.install-prompt-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(4px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: var(--z-modal);
+  padding: var(--space-4);
+}
+
+.install-prompt {
+  background: white;
+  border-radius: var(--radius-2xl);
+  padding: var(--space-6);
+  max-width: 350px;
+  width: 100%;
+  box-shadow: var(--shadow-xl);
+  animation: slideUp 0.3s ease-out;
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.install-prompt-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: var(--space-4);
+}
+
+.install-prompt-header h3 {
+  font-size: var(--text-lg);
+  color: var(--neutral-800);
+  font-weight: 600;
+}
+
+.close-button {
+  background: none;
+  border: none;
+  font-size: var(--text-xl);
+  color: var(--neutral-500);
+  cursor: pointer;
+  padding: var(--space-1);
+  border-radius: var(--radius-md);
+  transition: all var(--transition-base);
+}
+
+.close-button:hover {
+  background: var(--neutral-100);
+  color: var(--neutral-700);
+}
+
+.install-prompt-content {
+  text-align: center;
+  margin-bottom: var(--space-6);
+}
+
+.install-icon {
+  font-size: 3rem;
+  margin-bottom: var(--space-3);
+  display: block;
+}
+
+.install-prompt-content p {
+  color: var(--neutral-600);
+  line-height: 1.6;
+  margin-bottom: var(--space-4);
+}
+
+.install-benefits-mini {
+  list-style: none;
+  display: flex;
+  justify-content: space-around;
+  margin: var(--space-4) 0;
+}
+
+.install-benefits-mini li {
+  font-size: var(--text-sm);
+  color: var(--neutral-600);
+}
+
+.install-prompt-actions {
+  display: flex;
+  gap: var(--space-3);
+}
+
+.later-button, .install-button {
+  flex: 1;
+}
+
+/* Install Banner */
+.install-banner {
+  background: var(--gradient-primary);
+  color: white;
+  padding: var(--space-3) var(--space-4);
+  position: sticky;
+  top: 0;
+  z-index: var(--z-sticky);
+  box-shadow: var(--shadow-base);
+}
+
+.install-banner-content {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-3);
+  max-width: 420px;
+  margin: 0 auto;
+}
+
+.install-banner-text {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  flex: 1;
+}
+
+.install-banner-text .install-icon {
+  font-size: var(--text-xl);
+}
+
+.install-banner-text div strong {
+  display: block;
+  font-size: var(--text-sm);
+  font-weight: 600;
+  margin-bottom: var(--space-1);
+}
+
+.install-banner-text div p {
+  font-size: var(--text-xs);
+  opacity: 0.9;
+  margin: 0;
+}
+
+.install-banner-actions {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+.dismiss-button {
+  background: rgba(255, 255, 255, 0.2);
+  border: none;
+  color: white;
+  font-size: var(--text-lg);
+  padding: var(--space-1);
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  transition: background var(--transition-base);
+}
+
+.dismiss-button:hover {
+  background: rgba(255, 255, 255, 0.3);
+}
+
+.install-mini-button {
+  padding: var(--space-2) var(--space-4);
+  font-size: var(--text-sm);
+  background: white;
+  color: var(--primary-600);
+  border: none;
+  font-weight: 600;
+}
+
+.install-mini-button:hover {
+  background: var(--neutral-100);
+  transform: none;
+  box-shadow: none;
+}
+
+/* Test Notification Styles */
+.test-notification {
+  width: 100%;
+}
+
+.test-button {
+  width: 100%;
+  margin-bottom: var(--space-3);
+}
+
+.test-status {
+  font-size: var(--text-sm);
+  color: var(--neutral-600);
+  text-align: center;
+  padding: var(--space-2);
+  background: var(--neutral-50);
+  border-radius: var(--radius-md);
+  margin: 0;
+}
+
+.test-status:has-text("✅") {
+  color: var(--success-600);
+  background: var(--success-50);
+}
+
+.test-status:has-text("❌") {
+  color: var(--primary-600);
+  background: var(--primary-50);
+}

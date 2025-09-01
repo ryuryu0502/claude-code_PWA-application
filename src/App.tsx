@@ -4,6 +4,8 @@ import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-d
 import { useAuth } from './hooks/useAuth'
 import { useOffline, useOfflineSync } from './hooks/useOffline'
 import TabNavigation from './components/Layout/TabNavigation'
+import InstallPrompt from './components/Common/InstallPrompt'
+import InstallBanner from './components/Common/InstallBanner'
 import Register from './pages/Register'
 import Home from './pages/Home'
 import Talk from './pages/Talk'
@@ -25,6 +27,8 @@ const App: React.FC = () => {
   return (
     <Router>
       <div className="app">
+        <InstallBanner />
+        
         {/* Main content area for page components */}
         <main className="main-content">
           <Routes>
@@ -38,6 +42,8 @@ const App: React.FC = () => {
         
         {/* Bottom tab navigation */}
         <TabNavigation />
+        
+        <InstallPrompt />
       </div>
     </Router>
   )

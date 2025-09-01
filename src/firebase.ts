@@ -1,6 +1,6 @@
 // Firebase configuration and service initialization
 import { initializeApp } from 'firebase/app'
-import { getAuth, GoogleAuthProvider, TwitterAuthProvider } from 'firebase/auth'
+import { getAuth, GoogleAuthProvider, createUserWithEmailAndPassword, signInWithEmailAndPassword } from 'firebase/auth'
 import { getFirestore } from 'firebase/firestore'
 import { getMessaging } from 'firebase/messaging'
 
@@ -23,6 +23,6 @@ export const auth = getAuth(app)
 export const db = getFirestore(app)
 export const messaging = getMessaging(app)
 export const googleProvider = new GoogleAuthProvider()
-export const twitterProvider = new TwitterAuthProvider()
+export { createUserWithEmailAndPassword, signInWithEmailAndPassword }
 
 export default app

@@ -1,29 +1,14 @@
 // Custom hook for handling authentication with Google and Twitter
 import { useEffect } from 'react'
-import { onAuthStateChanged, signInWithPopup, signInWithRedirect, getRedirectResult, signOut as firebaseSignOut } from 'firebase/auth'
+import { onAuthStateChanged, signInWithPopup, signOut as firebaseSignOut } from 'firebase/auth'
 import { doc, setDoc, getDoc } from 'firebase/firestore'
-import { auth, googleProvider, twitterProvider, db } from '../firebase'
+import { auth, googleProvider, createUserWithEmailAndPassword, signInWithEmailAndPassword, db } from '../firebase'
 import { useAuthStore } from '../stores/authStore'
 
 export const useAuth = () => {
   const { user, setUser, loadUserProfile } = useAuthStore()
 
   useEffect(() => {
-    // Handle redirect result from Google sign-in
-    const handleRedirectResult = async () => {
-      try {
-        const result = await getRedirectResult(auth)
-        if (result?.user) {
-          await createUserProfile(result.user)
-        }
-      } catch (error) {
-        console.error('リダイレクト結果エラー:', error)
-      }
-    }
-
-    handleRedirectResult()
-
-    // Listen for authentication state changes
     const unsubscribe = onAuthStateChanged(auth, async (user) => {
       setUser(user)
       if (user) {
@@ -46,14 +31,23 @@ export const useAuth = () => {
     }
   }
 
-  // Sign in with Twitter using popup flow
-  const signInWithTwitter = async () => {
+  const signUpWithEmail = async (email: string, password: string) => {
     try {
-      const result = await signInWithPopup(auth, twitterProvider)
+      const result = await createUserWithEmailAndPassword(auth, email, password)
       await createUserProfile(result.user)
       return result.user
     } catch (error) {
-      console.error('Xログインエラー:', error)
+      console.error('メール登録エラー:', error)
+      throw error
+    }
+  }
+
+  const signInWithEmail = async (email: string, password: string) => {
+    try {
+      const result = await signInWithEmailAndPassword(auth, email, password)
+      return result.user
+    } catch (error) {
+      console.error('メールログインエラー:', error)
       throw error
     }
   }
@@ -92,7 +86,8 @@ export const useAuth = () => {
   return {
     user,
     signInWithGoogle,
-    signInWithTwitter,
+    signUpWithEmail,
+    signInWithEmail,
     signOut,
     isAuthenticated: !!user
   }
