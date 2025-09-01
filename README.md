@@ -20,9 +20,10 @@ PWA形式でインストール可能なTwitterプレゼント企画アプリで�
 - ユーザープロフィール管理
 
 ### 📱 PWA機能
-- オフライン対応
+- オフライン対応（Dexie.js IndexedDB）
 - プッシュ通知
 - ホーム画面へのインストール対応
+- モダンなTailwind CSSデザイン
 
 ### 🎁 プレゼント企画
 - 企画参加システム
@@ -37,12 +38,14 @@ PWA形式でインストール可能なTwitterプレゼント企画アプリで�
 ## 技術スタック
 
 - **Frontend**: React 18 + TypeScript + Vite
+- **UI/Styling**: Tailwind CSS v4 + PostCSS
 - **PWA**: Vite PWA Plugin + Service Worker
 - **Backend**: Firebase (Auth, Firestore, Cloud Messaging)
 - **State Management**: Zustand
 - **Routing**: React Router DOM
-- **Testing**: Playwright
-- **Styling**: CSS Modules
+- **Offline Storage**: Dexie.js (IndexedDB)
+- **Testing**: Playwright (E2E) + Vitest (Unit) + @testing-library/react
+- **AI Development**: GeminiCLI for code analysis and enhancement
 
 ## セットアップ
 
