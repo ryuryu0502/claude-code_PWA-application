@@ -10,6 +10,7 @@ import Register from './pages/Register'
 import Home from './pages/Home'
 import Talk from './pages/Talk'
 import Settings from './pages/Settings'
+import HostDashboard from './pages/HostDashboard'
 import './App.css'
 
 const App: React.FC = () => {
@@ -36,6 +37,7 @@ const App: React.FC = () => {
             <Route path="/home" element={<Home />} />
             <Route path="/talk" element={<Talk />} />
             <Route path="/settings" element={<Settings />} />
+            <Route path="/host" element={<HostDashboard />} />
             <Route path="/" element={<Navigate to="/register" />} />
           </Routes>
         </main>

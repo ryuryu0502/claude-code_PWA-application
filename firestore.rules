@@ -7,6 +7,12 @@ service cloud.firestore {
       allow read: if true; // Allow reading user profiles for public display
     }
     
+    // Hosts can read and write their own host profile
+    match /hosts/{userId} {
+      allow read, write: if request.auth != null && request.auth.uid == userId;
+      allow read: if true; // Allow reading host profiles for public display
+    }
+    
     // Messages can be read by recipients
     match /messages/{messageId} {
       allow read: if request.auth != null && 
@@ -18,7 +24,7 @@ service cloud.firestore {
     // Campaigns can be read by all users
     match /campaigns/{campaignId} {
       allow read: if true;
-      allow write: if request.auth != null; // Only authenticated users can create campaigns
+      allow write: if request.auth != null && exists(/databases/$(database)/documents/hosts/$(request.auth.uid));
     }
     
     // Allow public read access for announcements

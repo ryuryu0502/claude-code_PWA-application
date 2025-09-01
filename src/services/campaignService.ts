@@ -35,9 +35,13 @@ export class CampaignService {
         status: 'draft'
       })
       return docRef.id
-    } catch (error) {
+    } catch (error: any) {
+      if (error.code === 'permission-denied') {
+        console.error('Firestoreセキュリティルールにより拒否:', error);
+        throw new Error('企画を作成する権限がありません。ホストとして登録されているか確認してください。');
+      }
       console.error('企画作成エラー:', error)
-      throw error
+      throw new Error('企画の作成中に不明なエラーが発生しました。');
     }
   }
 

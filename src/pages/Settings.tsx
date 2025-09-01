@@ -1,12 +1,17 @@
 import React, { useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 import { useAuth } from '../hooks/useAuth'
 import { useAuthStore } from '../stores/authStore'
+import { useHostStore } from '../stores/hostStore'
 import { notificationService } from '../services/notificationService'
 import ProfileForm from '../components/Profile/ProfileForm'
+import HostLogin from '../components/Host/HostLogin'
 
 const Settings: React.FC = () => {
   const { signOut, user } = useAuth()
   const { profile, updateProfile } = useAuthStore()
+  const { isHost } = useHostStore()
+  const navigate = useNavigate()
   const [showHostLogin, setShowHostLogin] = useState(false)
   const [testStatus, setTestStatus] = useState<string>('')
 
@@ -26,7 +31,16 @@ const Settings: React.FC = () => {
   }
 
   const handleHostLogin = () => {
-    setShowHostLogin(true)
+    if (isHost) {
+      navigate('/host')
+    } else {
+      setShowHostLogin(true)
+    }
+  }
+
+  const handleHostLoginSuccess = () => {
+    setShowHostLogin(false)
+    navigate('/host')
   }
 
   const testPushNotification = async () => {
@@ -106,7 +120,7 @@ const Settings: React.FC = () => {
         <h2>アプリ管理</h2>
         <div className="setting-item">
           <button onClick={handleHostLogin} className="host-login-button">
-            ホストログイン
+            {isHost ? 'ホストダッシュボード' : 'ホストになる'}
           </button>
         </div>
         
@@ -130,15 +144,10 @@ const Settings: React.FC = () => {
       )}
 
       {showHostLogin && (
-        <div className="modal">
-          <div className="modal-content">
-            <h3>ホストログイン</h3>
-            <p>ホスト機能は管理者専用です。</p>
-            <button onClick={() => setShowHostLogin(false)}>
-              閉じる
-            </button>
-          </div>
-        </div>
+        <HostLogin 
+          onClose={() => setShowHostLogin(false)}
+          onSuccess={handleHostLoginSuccess}
+        />
       )}
     </div>
   )
