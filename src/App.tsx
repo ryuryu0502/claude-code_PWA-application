@@ -1,17 +1,19 @@
-import React, { useEffect } from 'react';
-import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
-import { useAuth } from './hooks/useAuth';
-import { useOffline, useOfflineSync } from './hooks/useOffline';
-import TabNavigation from './components/Layout/TabNavigation';
-import InstallPrompt from './components/Common/InstallPrompt';
-import InstallBanner from './components/Common/InstallBanner';
-import Register from './pages/Register';
-import Home from './pages/Home';
-import Talk from './pages/Talk';
-import Settings from './pages/Settings';
-import HostDashboard from './pages/HostDashboard';
-import CampaignDetail from './pages/CampaignDetail';
-import './App.css';
+// Main application component for PWA Twitter present campaign app
+import React, { useEffect } from 'react'
+import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom'
+import { useAuth } from './hooks/useAuth'
+import { useOffline, useOfflineSync } from './hooks/useOffline'
+import TabNavigation from './components/Layout/TabNavigation'
+import { InstallPrompt } from './components/PWA/InstallPrompt'
+import InstallBanner from './components/Common/InstallBanner'
+import Register from './pages/Register'
+import Home from './pages/Home'
+import Talk from './pages/Talk'
+import Settings from './pages/Settings'
+import HostDashboard from './pages/HostDashboard'
+import MyPage from './pages/MyPage'
+import CampaignDetail from './pages/CampaignDetail'
+import './App.css'
 
 const App: React.FC = () => {
   const { isAuthenticated } = useAuth();
@@ -36,6 +38,7 @@ const App: React.FC = () => {
             <Route path="/talk" element={<Talk />} />
             <Route path="/settings" element={<Settings />} />
             <Route path="/host" element={<HostDashboard />} />
+            <Route path="/mypage" element={<MyPage />} />
             <Route path="/campaign/:id" element={<CampaignDetail />} />
             <Route path="/" element={<Navigate to="/home" />} />
           </Routes>

@@ -1,36 +1,125 @@
 rules_version = '2';
 service cloud.firestore {
   match /databases/{database}/documents {
+    // Helper functions
+    function isAuthenticated() {
+      return request.auth != null;
+    }
+    
+    function isOwner(userId) {
+      return isAuthenticated() && request.auth.uid == userId;
+    }
+    
+    function isHost() {
+      return isAuthenticated() && exists(/databases/$(database)/documents/hosts/$(request.auth.uid));
+    }
+    
+    function isCampaignHost(campaignId) {
+      return isAuthenticated() && 
+        get(/databases/$(database)/documents/campaigns/$(campaignId)).data.hostId == request.auth.uid;
+    }
+    
     // Users can read and write their own data
     match /users/{userId} {
-      allow read, write: if request.auth != null && request.auth.uid == userId;
       allow read: if true; // Allow reading user profiles for public display
+      allow write: if isOwner(userId);
+      allow create: if isAuthenticated();
     }
     
     // Hosts can read and write their own host profile
     match /hosts/{userId} {
-      allow read, write: if request.auth != null && request.auth.uid == userId;
       allow read: if true; // Allow reading host profiles for public display
+      allow write: if isOwner(userId);
+      allow create: if isAuthenticated();
     }
     
-    // Messages can be read by recipients
+    // Messages can be read by recipients and hosts
     match /messages/{messageId} {
-      allow read: if request.auth != null && 
+      allow read: if isAuthenticated() && 
         (request.auth.uid == resource.data.recipientId || 
          request.auth.uid == resource.data.hostId);
-      allow write: if request.auth != null && request.auth.uid == resource.data.hostId;
+      allow write: if isAuthenticated() && request.auth.uid == resource.data.hostId;
+      allow create: if isHost();
     }
     
-    // Campaigns can be read by all users
+    // Campaigns - enhanced security rules
     match /campaigns/{campaignId} {
-      allow read: if true;
-      allow write: if request.auth != null && exists(/databases/$(database)/documents/hosts/$(request.auth.uid));
+      allow read: if true; // Public read access for campaign discovery
+      allow create: if isHost();
+      allow update: if isCampaignHost(campaignId);
+      allow delete: if isCampaignHost(campaignId);
+    }
+    
+    // User Campaign Participations - new collection
+    match /userCampaignParticipations/{participationId} {
+      allow read: if isAuthenticated() && 
+        (request.auth.uid == resource.data.userId || 
+         request.auth.uid == resource.data.hostId);
+      allow create: if isAuthenticated() && request.auth.uid == request.resource.data.userId;
+      allow update: if isAuthenticated() && 
+        (request.auth.uid == resource.data.userId || 
+         request.auth.uid == resource.data.hostId);
+      allow delete: if isAuthenticated() && 
+        (request.auth.uid == resource.data.userId || 
+         request.auth.uid == resource.data.hostId);
+    }
+    
+    // Campaign Links - new collection
+    match /campaignLinks/{linkId} {
+      allow read: if true; // Public read for link resolution
+      allow create: if isHost();
+      allow update: if isAuthenticated() && 
+        get(/databases/$(database)/documents/campaigns/$(resource.data.campaignId)).data.hostId == request.auth.uid;
+      allow delete: if isAuthenticated() && 
+        get(/databases/$(database)/documents/campaigns/$(resource.data.campaignId)).data.hostId == request.auth.uid;
+    }
+    
+    // Access Logs - new collection
+    match /accessLogs/{logId} {
+      allow read: if isAuthenticated() && 
+        (request.auth.uid == resource.data.userId || 
+         request.auth.uid == resource.data.hostId);
+      allow create: if true; // Allow anonymous access logging
+      allow update: if false; // Access logs should be immutable
+      allow delete: if isAuthenticated() && 
+        get(/databases/$(database)/documents/campaigns/$(resource.data.campaignId)).data.hostId == request.auth.uid;
+    }
+    
+    // PWA Installation Logs - new collection for tracking installs
+    match /pwaInstallLogs/{logId} {
+      allow read: if isAuthenticated() && 
+        (request.auth.uid == resource.data.userId || 
+         request.auth.uid == resource.data.hostId);
+      allow create: if true; // Allow anonymous install tracking
+      allow update: if false; // Install logs should be immutable
+      allow delete: if false; // Install logs should be permanent for analytics
+    }
+    
+    // Campaign Analytics - computed data
+    match /campaignAnalytics/{campaignId} {
+      allow read: if isAuthenticated() && 
+        get(/databases/$(database)/documents/campaigns/$(campaignId)).data.hostId == request.auth.uid;
+      allow write: if false; // Analytics are computed, not directly writable
+    }
+    
+    // Host Analytics - computed data
+    match /hostAnalytics/{hostId} {
+      allow read: if isOwner(hostId);
+      allow write: if false; // Analytics are computed, not directly writable
     }
     
     // Allow public read access for announcements
     match /announcements/{announcementId} {
       allow read: if true;
-      allow write: if request.auth != null; // Only authenticated users can create announcements
+      allow create: if isHost(); // Only hosts can create announcements
+      allow update: if isAuthenticated() && request.auth.uid == resource.data.hostId;
+      allow delete: if isAuthenticated() && request.auth.uid == resource.data.hostId;
+    }
+    
+    // App Configuration - system settings
+    match /appConfig/{configId} {
+      allow read: if true; // Public read for app configuration
+      allow write: if false; // Configuration managed by admin only
     }
   }
 }

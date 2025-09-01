@@ -78,4 +78,15 @@
   --z-popover: 1060;
   --z-tooltip: 1070;
   --z-toast: 1080;
+  
+  /* Responsive Breakpoints */
+  --breakpoint-sm: 640px;
+  --breakpoint-md: 768px;
+  --breakpoint-lg: 1024px;
+  --breakpoint-xl: 1280px;
+  
+  /* Container Max Widths */
+  --container-mobile: 350px;
+  --container-tablet: 500px;
+  --container-desktop: 600px;
 }

@@ -18,10 +18,25 @@
   background: white;
   border-radius: var(--radius-2xl);
   padding: var(--space-6);
-  max-width: 350px;
+  max-width: var(--container-mobile);
   width: 100%;
   box-shadow: var(--shadow-xl);
   animation: slideUp 0.3s ease-out;
+}
+
+/* Responsive Design for Install Prompt */
+@media (min-width: 640px) {
+  .install-prompt {
+    max-width: var(--container-tablet);
+    padding: var(--space-8);
+  }
+}
+
+@media (min-width: 1024px) {
+  .install-prompt {
+    max-width: var(--container-desktop);
+    padding: var(--space-10);
+  }
 }
 
 @keyframes slideUp {
@@ -69,6 +84,12 @@
   margin-bottom: var(--space-6);
 }
 
+@media (min-width: 640px) {
+  .install-prompt-content {
+    margin-bottom: var(--space-8);
+  }
+}
+
 .install-icon {
   font-size: 3rem;
   margin-bottom: var(--space-3);
@@ -77,8 +98,17 @@
 
 .install-prompt-content p {
   color: var(--neutral-600);
-  line-height: 1.6;
+  line-height: 1.7;
   margin-bottom: var(--space-4);
+  font-size: var(--text-base);
+}
+
+@media (min-width: 640px) {
+  .install-prompt-content p {
+    font-size: var(--text-lg);
+    line-height: 1.8;
+    margin-bottom: var(--space-6);
+  }
 }
 
 .install-benefits-mini {
@@ -210,4 +240,281 @@
 .test-status:has-text("❌") {
   color: var(--primary-600);
   background: var(--primary-50);
+}
+
+/* Install Instructions Responsive Styles */
+.install-instructions {
+  max-width: var(--container-mobile);
+  margin: 0 auto;
+  padding: var(--space-4);
+}
+
+@media (min-width: 640px) {
+  .install-instructions {
+    max-width: var(--container-tablet);
+    padding: var(--space-6);
+  }
+}
+
+@media (min-width: 1024px) {
+  .install-instructions {
+    max-width: var(--container-desktop);
+    padding: var(--space-8);
+  }
+}
+
+.install-header {
+  text-align: center;
+  margin-bottom: var(--space-8);
+}
+
+.install-header h2 {
+  font-size: var(--text-2xl);
+  font-weight: 700;
+  color: var(--neutral-800);
+  margin-bottom: var(--space-3);
+  line-height: 1.3;
+}
+
+@media (min-width: 640px) {
+  .install-header h2 {
+    font-size: var(--text-3xl);
+  }
+}
+
+.install-subtitle {
+  font-size: var(--text-base);
+  color: var(--neutral-600);
+  line-height: 1.6;
+  margin: 0;
+}
+
+@media (min-width: 640px) {
+  .install-subtitle {
+    font-size: var(--text-lg);
+    line-height: 1.7;
+  }
+}
+
+.platform-tabs {
+  display: flex;
+  gap: var(--space-2);
+  margin-bottom: var(--space-6);
+  background: var(--neutral-100);
+  border-radius: var(--radius-xl);
+  padding: var(--space-1);
+}
+
+.tab-button {
+  flex: 1;
+  padding: var(--space-3) var(--space-4);
+  border: none;
+  background: transparent;
+  border-radius: var(--radius-lg);
+  font-size: var(--text-sm);
+  font-weight: 500;
+  color: var(--neutral-600);
+  cursor: pointer;
+  transition: all var(--transition-base);
+  text-align: center;
+}
+
+.tab-button:hover {
+  color: var(--neutral-800);
+  background: var(--neutral-50);
+}
+
+.tab-button.active {
+  background: white;
+  color: var(--primary-600);
+  font-weight: 600;
+  box-shadow: var(--shadow-sm);
+}
+
+@media (min-width: 640px) {
+  .tab-button {
+    font-size: var(--text-base);
+    padding: var(--space-4) var(--space-6);
+  }
+}
+
+.platform-content {
+  margin-bottom: var(--space-8);
+}
+
+.platform {
+  background: var(--gradient-surface);
+  border-radius: var(--radius-xl);
+  padding: var(--space-6);
+  border: 1px solid var(--neutral-200);
+  box-shadow: var(--shadow-sm);
+  animation: fadeIn 0.3s ease-out;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (min-width: 640px) {
+  .platform {
+    padding: var(--space-8);
+  }
+}
+
+.platform-header h3 {
+  font-size: var(--text-lg);
+  font-weight: 600;
+  color: var(--neutral-800);
+  margin-bottom: var(--space-4);
+  line-height: 1.4;
+}
+
+@media (min-width: 640px) {
+  .platform-header h3 {
+    font-size: var(--text-xl);
+    margin-bottom: var(--space-5);
+  }
+}
+
+.install-steps {
+  list-style: none;
+  counter-reset: step-counter;
+  margin: 0 0 var(--space-5) 0;
+  padding: 0;
+}
+
+.install-steps li {
+  counter-increment: step-counter;
+  position: relative;
+  padding: var(--space-3) 0 var(--space-3) var(--space-10);
+  font-size: var(--text-sm);
+  line-height: 1.6;
+  color: var(--neutral-700);
+  border-bottom: 1px solid var(--neutral-100);
+}
+
+.install-steps li:last-child {
+  border-bottom: none;
+}
+
+.install-steps li::before {
+  content: counter(step-counter);
+  position: absolute;
+  left: 0;
+  top: var(--space-3);
+  width: var(--space-6);
+  height: var(--space-6);
+  background: var(--gradient-primary);
+  color: white;
+  border-radius: var(--radius-full);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: var(--text-xs);
+  font-weight: 600;
+}
+
+@media (min-width: 640px) {
+  .install-steps li {
+    font-size: var(--text-base);
+    padding: var(--space-4) 0 var(--space-4) var(--space-12);
+  }
+  
+  .install-steps li::before {
+    width: var(--space-8);
+    height: var(--space-8);
+    font-size: var(--text-sm);
+    top: var(--space-4);
+  }
+}
+
+.tip {
+  background: var(--secondary-50);
+  border: 1px solid var(--secondary-100);
+  border-radius: var(--radius-lg);
+  padding: var(--space-4);
+  font-size: var(--text-sm);
+  line-height: 1.6;
+  color: var(--neutral-700);
+}
+
+@media (min-width: 640px) {
+  .tip {
+    font-size: var(--text-base);
+    padding: var(--space-5);
+  }
+}
+
+.install-benefits {
+  background: var(--gradient-surface);
+  border-radius: var(--radius-xl);
+  padding: var(--space-6);
+  border: 1px solid var(--neutral-200);
+  box-shadow: var(--shadow-sm);
+}
+
+@media (min-width: 640px) {
+  .install-benefits {
+    padding: var(--space-8);
+  }
+}
+
+.install-benefits h3 {
+  font-size: var(--text-lg);
+  font-weight: 600;
+  color: var(--neutral-800);
+  margin-bottom: var(--space-4);
+  text-align: center;
+}
+
+@media (min-width: 640px) {
+  .install-benefits h3 {
+    font-size: var(--text-xl);
+    margin-bottom: var(--space-5);
+  }
+}
+
+.benefits-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: var(--space-3);
+  grid-template-columns: 1fr;
+}
+
+@media (min-width: 640px) {
+  .benefits-list {
+    gap: var(--space-4);
+  }
+}
+
+.benefits-list li {
+  font-size: var(--text-sm);
+  line-height: 1.6;
+  color: var(--neutral-700);
+  padding: var(--space-3);
+  background: white;
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--neutral-100);
+  transition: all var(--transition-base);
+}
+
+.benefits-list li:hover {
+  transform: translateY(-1px);
+  box-shadow: var(--shadow-md);
+}
+
+@media (min-width: 640px) {
+  .benefits-list li {
+    font-size: var(--text-base);
+    padding: var(--space-4);
+  }
 }

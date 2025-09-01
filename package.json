@@ -8,7 +8,15 @@
     "build": "vite build",
     "preview": "vite preview",
     "lint": "eslint . --ext js,jsx,ts,tsx",
-    "typecheck": "tsc --noEmit"
+    "typecheck": "tsc --noEmit",
+    "test:playwright": "playwright test",
+    "test:playwright:ui": "playwright test --ui",
+    "test:playwright:debug": "playwright test --debug",
+    "test:playwright:report": "playwright show-report",
+    "test:basic": "playwright test --grep \"基本\"",
+    "test:auth": "playwright test --grep \"認証\"",
+    "test:pages": "playwright test --grep \"ページ\"",
+    "test:pwa": "playwright test --grep \"PWA\""
   },
   "dependencies": {
     "@google/generative-ai": "^0.24.1",
